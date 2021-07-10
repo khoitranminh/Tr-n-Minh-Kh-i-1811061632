@@ -31,8 +31,6 @@ namespace lab4.Models
         public virtual ICollection<Attendance> Attendances { get; set; }
 
         public virtual Category Category { get; set; }
-
-
         public string Name;
         public List<Category> ListCategory = new List<Category>();
         public string LectureName;

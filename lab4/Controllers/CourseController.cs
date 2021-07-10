@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -67,6 +68,55 @@ namespace lab4.Controllers
                 i.LectureName = currentUser.Name;
             }
             return View(courses);
+        }
+        public ActionResult Edit(int id)
+        {
+            BigSchoolContext context = new BigSchoolContext();
+            Course course = context.Courses.SingleOrDefault(p => p.Id == id);
+            course.ListCategory = context.Categories.ToList(); //thiếu tạo list category
+            if (course == null)
+            {
+                return HttpNotFound();
+            }
+            return View(course);
+        }
+        [HttpPost]
+        [Authorize]
+        public ActionResult Edit(Course course)
+        {
+            BigSchoolContext context = new BigSchoolContext();
+            Course courseUpdate = context.Courses.SingleOrDefault(p => p.Id == course.Id);
+            if (courseUpdate != null)
+            {
+                context.Courses.AddOrUpdate(course);
+                context.SaveChanges();
+            }
+            return RedirectToAction("Mine");
+        }
+        [Authorize]
+        public ActionResult Delete(int id)
+        {
+            BigSchoolContext context = new BigSchoolContext();
+            Course couse = context.Courses.SingleOrDefault(p => p.Id == id);
+            if (couse == null)
+            {
+                return HttpNotFound();
+            }
+            return View(couse);
+        }
+        [Authorize]
+        [HttpPost]
+        public ActionResult DeleteMine(int id)
+        {
+            BigSchoolContext context = new BigSchoolContext();
+            Course couse = context.Courses.SingleOrDefault(p => p.Id == id);
+            if (couse != null)
+            {
+                context.Courses.Remove(couse);
+                context.SaveChanges();
+            }
+
+            return RedirectToAction("Mine");
         }
 
     }

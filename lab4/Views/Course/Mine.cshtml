@@ -30,8 +30,8 @@
                         </span>
                     </div>
                     <div class="action">
-                        <a href="">Edit</a>
-                        <a href="">Delete</a>
+                        @Html.ActionLink("Edit", "Edit", new { id = course.Id })|
+                        @Html.ActionLink("Delete", "Delete", new { id = course.Id })
                     </div>
                 </li>
             }

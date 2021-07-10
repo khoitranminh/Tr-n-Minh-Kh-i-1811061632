@@ -8,7 +8,7 @@ namespace lab4.Models
     public partial class BigSchoolContext : DbContext
     {
         public BigSchoolContext()
-            : base("name=BigSchoolContext")
+            : base("name=BigSchoolContext1")
         {
         }
 
